@@ -1,0 +1,81 @@
+﻿@model Nullable<System.Int32>
+
+@*@using (Html.BeginForm()) 
+{*@    
+    <div class="form-horizontal">
+        <h2>
+            Hello Let us know your experince
+        </h2>
+        <h5>Note*   Your previous review will be replaced if submit a new one</h5>
+
+        
+        <hr />
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.BookId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Comment", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div>
+            Give us a rating out of 5 and let us know what you think
+        </div>
+        <div class="form-group">
+            @Html.Label("Rating", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Rating", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="save" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+@*}*@
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+
+<script>
+    $(document).ready(function () {
+        $('#save').on('click', function () {
+            var cmt = $("#Comment").val();
+            var rtng = $("#Rating").val();
+            var bkna = $("#Bookname").val();
+            if (cmt == null) {
+                alert("invalid");
+            }
+            else if (rtng == null) {
+                alert("invalid");
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Addfeedback", "Sales")?id=' + @Model+"&comment=" + cmt + "&rating=" + rtng + "&bookname" + bkna,
+                    success: function (result) {
+                        if (result != null && result != "Failed") {
+                            window.location.reload();
+                        }
+                        else if (result == "Failed") {
+                            console.log(result);
+                        }
+                    },
+                    failure: function (response) {
+                        console.log(response);
+                    }
+                });
+            }
+        });
+    });
+</script>

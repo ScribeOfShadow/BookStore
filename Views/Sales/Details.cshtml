@@ -1,0 +1,238 @@
+﻿@model BookStore.Models.Sale
+
+@{
+    ViewBag.Title = "Order Details";
+    var list = BookStore.Helpers.AnalyticsHelper.getfeedback(Model.SaleId);
+}
+
+<h2 class="text-center text-info">Details Of Your Order Number #@Model.SaleId</h2>
+<style>
+    .alerts {
+        padding: 20px;
+        background-color: #d0a772;
+        color: white;
+        font-size: 20px;
+    }
+
+
+    .closebtn1 {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
+</style>
+
+@if (ViewBag.Date != null)
+{
+
+    <h1 class="text-center text-dark">Your Order Has Been Successfully Delivered on : @ViewBag.Date.</h1>
+
+
+}
+
+@if (ViewBag.message != null && ViewBag.message != "")
+{
+    <div class="alerts">
+        <span class="closebtn1" onclick="this.parentElement.style.display='none';">&times;</span>
+        @ViewBag.message
+    </div>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt class="text-center text-info">
+            @Html.DisplayNameFor(model => model.SaleDate)
+        </dt>
+
+        <dd style="text-align:center">
+            @Html.DisplayFor(model => model.SaleDate)
+        </dd>
+
+        <dt class="text-center text-info">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd style="text-align:center">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt class="text-center text-info">
+            @Html.Label("Total Amount For Sale:")
+        </dt>
+
+        <dd style="text-align:center">
+            &#82;@Html.DisplayFor(model => model.SaleTotal)
+        </dd>
+
+    </dl>
+
+    <hr />
+    <h3 class="text-center text-info">Products:</h3>
+    <div>
+
+
+        <table id="table2" class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        <h1>Product Name</h1>
+                    </th>
+                    <th>
+                        <h1>Product Price</h1>
+                    </th>
+                    @if (User.IsInRole("Student"))
+                    {
+                        
+                        <th></th>
+                        
+                    }
+                </tr>
+            </thead>
+            @foreach (var item in ViewBag.SaleDetails)
+            {
+
+
+                <tbody>
+                    <tr>
+                        <td>
+                            @item.ProductName
+                        </td>
+                        <td>
+                            @item.ProductPrice
+                        </td>
+                        @if (User.IsInRole("Student"))
+                        {
+                           if(item.ProductCatergoryId != 11)
+                                { 
+                            <td>
+                                @*@Html.ActionLink("Request Return Or  Refund", "Returns", "Sales", new { id = ViewBag.SalesId, ProductionId = item.ProductId })*@
+
+                                @Html.ActionLink("Request Return Or  Refund", "Returns", new { id = ViewBag.SalesId, ProductionId = item.ProductId })
+
+                            </td>
+                            }
+                            <td>
+                                @Html.Partial("~/Views/Sales/_addfeedback.cshtml", Model.SaleId)
+                                @* @Html.Partial("~/Views/Sales/GetFeedback.cshtml", list);*@
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+
+
+            }
+        </table>
+    </div>
+
+    <hr />
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="@Model.SaleId" aid="@Model.SaleId" hiv="@Model.SaleId" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Confirm Delivery For: @Model.Name</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-info text-center text-capitalize">Address:</p>
+                    <p class="text-center">@Model.Address</p>
+                    <p class="text-danger text-center text-capitalize">Total:</p>
+                    <p class="text-center">@Model.SaleTotal</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Delivered", "Sales", new { id = Model.SaleId })'">Confirm Delivery</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<p>
+    <a href="/Home/Index" class="btn btn-success"><i class="glyphicon glyphicon-arrow-left"></i>Return </a>
+    @if (User.IsInRole("Driver"))
+    {
+        <h2 class="text-center text-success">Map: </h2>
+        <iframe width="1200"
+                height="500"
+                frameborder="0" style="position : relative; left : 5%;"
+                src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBNcE7mezvGDziXJG3p8wvchw5SSZMnUiQ&origin='@ViewBag.Delivery'&destination='@Model.Address'&avoid=tolls|highways" allowfullscreen>
+        </iframe>
+        <br />
+        <br />
+
+
+        foreach (var item in ViewBag.DeliveryDetails)
+        {
+            if (item.Dispatched == false)
+            {
+                <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("ApprovedDispatch", "Sales", new { aid = Model.SaleId })'">Approve Dispatch</button>
+            }
+            else
+            if (item.ConfirmOrder == false)
+            {
+                <H1 style="font-weight:600"> Informe customer to confirm order using email link </H1>
+            }
+            else
+                if (item.ConfirmDelivery == false)
+            {
+                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#@Model.SaleId"><i class="fa fa-shopping-cart"></i>Confirm Delivery</a>
+            }
+        }
+    }
+    @if (User.IsInRole("Student"))
+    {
+        if (Model.ConfirmOrder == false)
+        {
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("ConfirmOrder", "Sales", new { hiv = Model.SaleId })'">Confirm</button>
+        }
+        else
+        {
+            <h3> @ViewBag.ConfirmOrder </h3>
+           
+        }
+
+    }
+</p>
+
+
+
+<script src="@Url.Content("~/ scripts / Datatables / jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/ scripts / Datatables / dataTables.bootstrap.js")"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#table2").DataTable();
+
+
+        //$("#DistributionHistory").DataTable();
+        //$("#EmailHistoryTbl").DataTable();
+        //$("#SmsHistoryTbl").DataTable();
+        //$("#PetDetss").DataTable();
+        //$("#DeptResp").DataTable();
+        //$("#WardsTbl").DataTable();
+        //$("#StartObj").DataTable();
+        //$("#DocsTbl").DataTable();
+
+
+        /*    $("#ClosureTab").hide();*/
+    });
+
+</script>

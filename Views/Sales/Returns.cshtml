@@ -1,0 +1,121 @@
+﻿@model BookStore.Models.ReturnRefundVM
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2 class="text-center text-info">Details Of Your Order Number #@Model.sale.SaleId</h2>
+
+@if (ViewBag.Date != null)
+{
+    <h1 class="text-center text-warning">Your Order Has Been Successfully Delivered on @ViewBag.Date.</h1>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sale.SaleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sale.SaleDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sale.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sale.Address)
+        </dd>
+
+       
+        <dt>
+            @Html.Label("Total Amount For Sale:")
+        </dt>
+
+        @*<dd>
+                &#82;@Html.DisplayFor(model => model.sale.SaleTotal)
+            </dd>*@
+
+    </dl>
+
+    <hr />
+    <h3 class="text-center text-info">Products:</h3>
+
+    @foreach (var item in ViewBag.SaleDetails)
+    {
+        <ul>
+            <li>
+                @item.ProductName - <strong>&#82;@item.ProductPrice</strong> &#82;
+            </li>
+        </ul>
+    }
+
+    <hr />
+
+
+    @using (Html.BeginForm("Returns", "Sales"))
+    {
+        @Html.HiddenFor(x => x.sale.SaleId)
+        @Html.HiddenFor(x => x.ProducId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnAndRefund.RNRId, "Type of Refund", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("RNRId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ReturnAndRefund.RNRId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnAndRefund.ReasonId, "Reason for Refund", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ReasonId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ReturnAndRefund.ReasonId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReturnAndRefund.AdditionalComments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReturnAndRefund.AdditionalComments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReturnAndRefund.AdditionalComments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="padding-left:40px">
+            <input type="submit" value="Save" id="Save" />
+        </div>
+    }
+
+    <br />
+    <br />
+
+    <!-- Modal -->
+    <div class="modal fade" id="@Model.sale.SaleId" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Confirm Delivery For: @Model.sale.Name</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="text-info text-center text-capitalize">Address:</p>
+                    <p class="text-center">@Model.sale.Address</p>
+                    <p class="text-danger text-center text-capitalize">Total:</p>
+                    <p class="text-center">@Model.sale.SaleTotal</p>
+
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Delivered", "Sales", new { id = Model.sale.SaleId })'">Confirm Delivery</button>*@
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

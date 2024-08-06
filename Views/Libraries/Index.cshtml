@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BookStore.Models.Library>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<body>
+
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <h2>Adding Book</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LibraryProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LibraryDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Borrowed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReturnedDate)
+                </th>
+                <th>
+                   Book is Borrowed
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LibraryProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LibraryDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Borrowed)
+                    </td>
+                    <td>
+                        @if (item.ReturnedDate == null)
+                        {
+                            <span>Not yet returned</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.ReturnedDate)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsAssigned)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.LibraryId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
+    else if (Request.IsAuthenticated && User.IsInRole("Student"))
+    {
+
+<h1 style="margin-top:80px"> <span style="margin-left:250px; margin-top:100px">You Have Successfully Borrowed A Book </span></h1>
+
+    }
+</body>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BookStore.Models.WishLists>
+
+@{
+    ViewBag.Title = "Wlist";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Wishlists</h2>
+
+<p>
+    @Html.ActionLink("+List", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListName)
+            </td>
+            <td>
+               
+                @Html.ActionLink("Delete", "Delete", new { id = item.ListId })
+                <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("DisplayWishlist", "SavedProducts", new { id = item.ListId })'">View Wishlist</button>
+            </td>
+        </tr>
+    }
+
+</table>

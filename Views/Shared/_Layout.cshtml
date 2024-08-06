@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <Style>
+        body {
+            padding-top: 100px;
+            padding-bottom: 10px;
+            background-image: url('/Images/K1.jpg');
+            height: 800px;
+            margin: 0;
+            font-family: "Century Gothic";
+        }
+
+        .nav__list {
+            list-style: none;
+            display: flex;
+            padding-right: 30px;
+            padding-left: 30px;
+            margin-right: 0px;
+        }
+
+        navbar navbar-inverse navbar-fixed-top {
+            color: burlywood;
+        }
+
+        navbar-header {
+            color: burlywood;
+        }
+
+        navbar-collapse collapse {
+            color: burlywood;
+        }
+    </Style>
+</head>
+
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-right" style="background-color:azure;" >
+        <div class="nav__list" style="font-family:'Century Gothic'; font-size:20px; background-color: black; ">
+            <div class="navbar-header" style=" font-family:'Century Gothic'; font-size:22px;">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="color:aquamarine">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown" style="font-family:'Century Gothic'; font-size:20px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Books<b class="caret"></b></a>
+                        <ul class="dropdown-menu" style="font-family:'Century Gothic'; font-size:20px;">
+                            @*  <li>@Html.ActionLink("Comedy", "Comedy", "Products" )</li>
+                                <li>@Html.ActionLink("Drama", "Drama", "Products" )</li>
+                                <li>@Html.ActionLink("Fantasy", "Fantasy", "Products" )</li>
+                                <li>@Html.ActionLink("Horror", "Horror", "Products" )</li>
+                                <li class="divider"></li>*@
+                            <li class="dropdown-header" style="color:black">View All Books</li>
+                            <li>@Html.ActionLink("Our Books", "OurProducts", "Products")</li>
+                        </ul>
+                    </li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<style>
+    li.my-class:link {
+        color: indianred;
+    }
+</style>

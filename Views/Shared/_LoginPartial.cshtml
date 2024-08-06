@@ -1,0 +1,178 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity
+@using BookStore.Models
+@if (Request.IsAuthenticated)
+{
+    <style>
+        li {
+            background: #d0a772;
+            color: #ffffff;
+            border-radius: 4px;
+            margin: 4px;
+        }
+
+        .a_exception {
+            color: #ffffff !important;
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/Theme1/css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/Content/Theme1/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="~/Content/Theme1/css/responsive.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/Content/Theme1/css/custom.css">
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active nav-link" style="color:azure; height:32px "><a class="nav-link ">@{Html.RenderAction("CartSummary", "ShoppingCart", new { @class = "a_exception" });}</a></li>
+    </ul>
+    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+
+        <li class="nav-item active nav-link" style="padding:1px">
+            @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+        </li>
+        <li class="dropdown nav-item active nav-link" style="padding:1px">
+
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Administative Functions<b class=""></b></a>
+
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">Item Inventory</li>
+                <li class="nav-link">@Html.ActionLink("Manage Products", "Index", "Products")</li>
+                <li class="nav-link">@Html.ActionLink("Manage EBooks", "Index", "eReader")</li>
+                @*<li>@Html.ActionLink("Manage Products Categories", "Index", "ProductCategories")</li>*@
+                <li class="nav-link">@Html.ActionLink("Manage Library Items", "Index", "Libraries")</li>
+                <li class="nav-link">@Html.ActionLink("Returns And Refunds", "Index", "ReturnAndRefunds")</li>
+                <li class="nav-link">@Html.ActionLink("Evaluations", "Index", "Evaluations")</li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Tool Manager</li>
+                <li class="nav-link">@Html.ActionLink("Manage Roles", "Index", "RolesAdmin")</li>
+                <li class="nav-link">@Html.ActionLink("Assign Roles", "Index", "UsersAdmin")</li>
+                <li class="divider"></li>
+                <li class="nav-link">
+                    @Html.ActionLink("Manage Requests", "Index", "RequestBooks")
+                </li>
+                <li class="nav-link">@Html.ActionLink("Scan A Book", "BorrowBook", "Libraries")</li>
+                <li class="dropdown-header">Sales</li>
+                <li class="nav-link">@Html.ActionLink("OverViewSales", "Analytics", "Analytics")</li>
+                <li class="nav-link">@Html.ActionLink("Coupon Manager", "Index", "Coupons")</li>
+            </ul>
+        </li>
+
+    }
+    else if (Request.IsAuthenticated && User.IsInRole("Driver"))
+    {
+        <li class="dropdown nav-item active nav-link">
+            <a href="#" class="dropdown-toggle  nav-link" data-toggle="dropdown">Driver Functions<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">Deliver Order</li>
+                <li class="nav-link">@Html.ActionLink("Deliver Order", "Index", "Sales")</li>
+                <li class="nav-link">@Html.ActionLink("Pick Up Order", "PickUpOrder", "Sales")</li>
+            </ul>
+        </li>
+    }
+    else if (Request.IsAuthenticated && User.IsInRole("Student"))
+    {
+        <li class="dropdown nav-item active nav-link" style="padding:1px">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Student Functions<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+
+
+                <li class="divider"></li>
+                <li class="dropdown-header">Functions</li>
+                <li class="nav-link">
+                    @Html.ActionLink("Manage Account", "Index", "Manage")
+                </li>
+                <li class="nav-link">@Html.ActionLink("Returns And Refunds", "UserReturnsAndRefunds", "ReturnAndRefunds")</li>
+                
+                <li class="dropdown-header">Books</li>
+                <li class="nav-link">@Html.ActionLink("Borrow A Book", "BorrowBook", "Libraries")</li>
+                <li class="nav-link">
+                    @Html.ActionLink("Request A Book", "Index", "RequestBooks")
+                </li>
+            </ul>
+        </li>
+
+        <li class="dropdown nav-item active nav-link" style="padding:1px">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Account<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">History</li>
+                <li class="nav-link">@Html.ActionLink("Purchase History", "PurchaseHistory", "Manage")</li>
+
+                <li class="nav-link">
+                    @Html.ActionLink("Borrowed History", "IndexBorrowed", "BorrowedBooks")
+                </li>
+                <li class="dropdown-header">E-Library</li>
+                <li class="nav-link">
+                    @Html.ActionLink("EBook Library", "PurchasedEreader", "Checkout")
+                </li>
+                <li class="dropdown-header">Announcements</li>
+                <li class="nav-link">@Html.ActionLink("Forum", "Index", "ChatBoxes")</li>
+                <li class="dropdown-header">Wishlist</li>
+                <li class="nav-link">@Html.ActionLink("Wishlist", "Wlist", "WishLists")</li>
+
+
+            </ul>
+        </li>
+    }
+    else if (Request.IsAuthenticated && User.IsInRole("Teacher"))
+    {
+
+        <li class="dropdown nav-item active nav-link" style="padding:1px">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Account<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">View History</li>
+                <li class="nav-link">@Html.ActionLink("Purchase History", "PurchaseHistory", "Manage")</li>
+                <li class="nav-link">@Html.ActionLink("Returns And Refunds", "UserReturnsAndRefunds", "ReturnAndRefunds")</li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Account</li>
+                <li class=" nav-item active nav-link">
+                    @Html.ActionLink("Manage Account", "Index", "Manage")
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown nav-item active nav-link" style="padding:1px">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Teacher Panel<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">View Purchase History</li>
+                <li class="nav-link">@Html.ActionLink("Requested Books", "Index", "RequestBooks")</li>
+                <li class="nav-link">@Html.ActionLink("Borrow A Book", "BorrowBook", "Libraries")</li>
+                <li class="nav-link">@Html.ActionLink("Forum", "Index", "ChatBoxes")</li>
+            </ul>
+        </li>
+    }
+    else if (Request.IsAuthenticated)
+    {
+        <li class="nav-link">
+            @Html.ActionLink("Manage Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li class="dropdown nav-item active nav-link">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Your Account<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">View Purchase History</li>
+                <li class="nav-link">@Html.ActionLink("Purchase History", "PurchaseHistory", "Manage")</li>
+                <li class="dropdown-header">View Returns and Refunds</li>
+                <li class="nav-link">@Html.ActionLink("Returns And Refunds", "UserReturnsAndRefunds", "ReturnAndRefunds")</li>
+                <li class="dropdown-header">Wishlist</li>
+                <li class="nav-link">@Html.ActionLink("Wishlist", "Wlist", "WishLists")</li>
+
+            </ul>
+        </li>
+    }
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <li class="nav-item active"><a class=" nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+    }
+}
+else
+{
+
+    <li class="nav-item active nav-link">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-item active nav-link" })</li>
+    <li class="nav-item active nav-link">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-item active nav-link" })</li>
+
+}

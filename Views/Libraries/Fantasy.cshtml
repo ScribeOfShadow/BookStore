@@ -1,0 +1,223 @@
+﻿@model PagedList.IPagedList<BookStore.Models.Library>
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<h2 class="text-center text-info" style="color:azure;padding-bottom:0px">Fantasy</h2>
+
+
+<body>
+    <div class="bs-docs-section container">
+        <div class="row d-flex justify-content-center">
+            @using (Html.BeginForm("Fantasy", "Libraries", FormMethod.Get))
+            {
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="searchdiv">
+                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Enter a product name here.", @class = "search-input" })
+                            <input type="submit" class="dropbtn" value="Search" style="border-radius:4px;cursor:pointer" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+
+<li class="navbar2" style="padding:1px">
+    <ul class="navbar c">
+        <li class="nav-link2">@Html.ActionLink("Home", "BorrowBook", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Action", "Action", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Comedy", "Comedy", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Cooking", "Cooking", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Education", "Education", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Drama", "Drama", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Fantasy", "Fantasy", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("History", "History", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Religion", "Religion", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Romance", "Romance", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link2">@Html.ActionLink("Sci_fi", "Sci_fi", "Libraries", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+    </ul>
+</li>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@*Borrow Book Script*@
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".AddLink").click(function () {
+            // Get the id from the link
+            var recordToAdd = $(this).attr("data-id");
+            if (recordToAdd != '') {
+                // Perform the ajax post
+                $.post("/Libraries/ViewBooksBorrowed", { "id": recordToAdd },
+                    function (data) {
+                        $('#cart-status').text(data.CartCount);
+                    });
+            }
+        });
+    });
+</script>
+
+
+<body>
+    <div id="SubmitModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title dropbtn" id="modalTitleText">Description</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container col-md-12" style="height:300px; width:600px">
+                        <div id="appendDes" class="col-md-12">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="dropbtn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<body style="overflow-x:hidden">
+
+
+    <style>
+        .borrow-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            width: 100px;
+            background: #0366d6;
+            text-decoration: none;
+            color: black;
+            border-radius: 2px;
+        }
+
+            .borrow-btn:hover {
+                color: black;
+            }
+    </style>
+
+
+    <div class="row">
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            foreach (var item in Model)
+            {
+                if (item.TotalStock != 0)
+                {
+
+
+
+                    <div class="col-md-4 p-4">
+                        <div class="card" style="width: 24rem;background:#eaeaea; height:400px">
+                            <img style="padding-bottom:6px; height:200px " class="card-img-top" src="@Url.Content(item.LibraryURL)">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <p class="card-text"></p>
+                                <p class="card-text">@item.LibraryProductName </p>
+                                <p class="card-text">@item.TotalStock Currently Are Available</p>
+                                <div style="height:70px;padding:6px; display:flex; justify-content:center; align-items:center">
+                                    <div class="AddLinkTab" style="height: fit-content; text-align: center;">
+                                        <a href="https://webqr.com/" class="button">RETURN</a>
+                                    </div>
+                                    <br />
+                                    <div class="AddLinkTab" style="height: fit-content; text-align: center;">
+                                        <a href="https://webqr.com/" class="button">BORROW</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown" style="background:rgb(82, 82, 82); display:flex; align-items:center;padding:8px 0; justify-content:center">
+
+                                <input type="button" id="btnShowMore" class="dropbtn" onclick="showDesFunction('@item.LibraryDescription')" value="Show More" style="font-size:16px;background:black;cursor:pointer; margin-top:0px; border-radius:2px; display:flex;align-items:center;border-bottom:3px solid white">
+                                <div id="Textbox" class="dropdown-content">
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            }
+        }
+
+
+
+
+        @if (Request.IsAuthenticated && User.IsInRole("Student"))
+        {
+            foreach (var item in Model)
+
+            {
+                if (item.LibraryCatergoryId == 6)
+                {
+                <div class="col-md-4 p-4">
+                    <div class="card" style="width: 23rem; background: #eaeaea; height: 400px; box-shadow: 0 5px 4px black">
+                        <img style="padding-bottom: 6px; height: 200px " class="card-img-top" src="@Url.Content(item.LibraryURL)">
+                        <div class="card-body">
+                            <p class="card-text" style="font-size:20px; margin-bottom:2px; text-align:center">Title :<span style="font-weight:900" ;> @item.LibraryProductName </span>  </p>
+                            <p class="card-text" style="text-align: center; font-size: 18px; ">Currently Are Available :<span style="font-weight:900; "> @item.TotalStock </span>  </p>
+                            <div style="height:70px;padding:6px; display:flex; justify-content:center; align-items:center">
+                                <div class="AddLinkTab" style="height: fit-content; text-align: center; font-size:20px">
+                                    @Html.ActionLink("RETURN", "ReturnToLibary", new { id = item.LibraryId })
+                                </div>
+                                <br />
+                                <div class="AddLinkTab" style="height: fit-content; text-align: center; font-size: 20px ">
+                                    @Html.ActionLink("BORROW", "Edit", new { id = item.LibraryId })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown" style="background:rgb(82, 82, 82); display:flex; align-items:center;padding:8px 0; justify-content:center; margin-top:1px">
+
+                            <input type="button" id="btnShowMore" class="dropbtn" onclick="showDesFunction('@item.LibraryDescription')" value="Show More" style="font-size:16px;background:black;cursor:pointer; margin-top:0px; border-radius:2px; display:flex;align-items:center;border-bottom:3px solid white">
+                            <div id="Textbox" class="dropdown-content">
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                }
+            }
+        }
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vast-engineering/jquery-popup-overlay@2/jquery.popupoverlay.min.js"></script>
+
+<script>
+    function showDesFunction(description) {
+        const [desc, cat] = description.split('|');
+        var des = document.getElementById("appendDes");
+        des.style.color = "black";
+        des.innerHTML = desc;
+        $("#SubmitModal").modal("show");
+    };
+</script>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="px-5">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Fantasy", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>

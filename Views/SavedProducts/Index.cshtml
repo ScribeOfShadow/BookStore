@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BookStore.Models.WishListsProducts>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 32%;
+        position: center;
+        text-align: center;
+        margin: auto;
+        background-color: #E0E0E0;
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    .container {
+        padding: 2px 16px;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .img {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .p:hover {
+        color: red;
+    }
+</style>
+
+<h2 style="ali">WishList</h2>
+
+@foreach (var item in Model)
+{ if(item.ListId == null) { 
+
+    {
+        @Html.HiddenFor(modelItem => item.ProductId)
+
+        @Html.HiddenFor(modelItem => item.WishLists.ListName)
+
+        @Html.HiddenFor(modelItem => item.TotalItems)
+
+        @Html.HiddenFor(modelItem => item.ListUrl)
+        <div class="card">
+            <div class="container">
+                <img src="data:image;base64,@System.Convert.ToBase64String(item.Products.ProductImage)"
+                     style="width:400px; height:400px; margin:0px; padding:10px" alt="no photo" class="adsm-image; center-url" />
+
+                <h4 style=" font-size: 20px;"> @Html.DisplayFor(modelItem => item.Products.ProductName)</h4>
+                <p style=" font-size: 30px;">@Html.ActionLink("Save to a list", "Edit", new { id = item.ListedProductsId })</p>
+            </div>
+        </div>
+
+
+
+        }
+    }
+}

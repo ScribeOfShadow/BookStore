@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BookStore.Models.eBook>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookImageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookGenre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.LastReadPosition)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @{
+                if (item.BookImageContent != null)
+                {
+                    var base64 = Convert.ToBase64String(item.BookImageContent);
+                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    <img src="@imgSrc" width="200" height="200" />
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookGenre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.FilePath)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.LastReadPosition)
+        </td>
+      
+        <td>
+            @Html.ActionLink("Read Book", "PlayeBook", new { id = item.Id, lastRead = false }, new { @class = "btn-sm btn-primary" })
+        </td>
+    </tr>
+}
+
+</table>

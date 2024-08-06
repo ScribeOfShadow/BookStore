@@ -1,0 +1,115 @@
+﻿@model BookStore.Models.Evaluation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Products.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Products.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.returnAndRefund.ReferenceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.returnAndRefund.ReferenceNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rNRData.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rNRData.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale.SaleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale.SaleDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Severity.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Severity.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReferenceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferenceNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCompleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCompleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PickedUpAndReadyForEval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PickedUpAndReadyForEval)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

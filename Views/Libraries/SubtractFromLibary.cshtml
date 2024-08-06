@@ -1,0 +1,21 @@
+﻿@model Boolean
+@{
+    ViewBag.Title = "SubtractFromLibary";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>RemovedFrom Libary Successfully</h2>
+<br />
+<br />
+@if (Model == true)
+{
+    <span class="alert alert-success">
+        Book Borrowed Successfully
+    </span>
+}
+else
+{
+    <span class="alert alert-danger">
+        Book could not be borrowed
+    </span>
+}

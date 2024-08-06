@@ -1,0 +1,12 @@
+﻿.square {
+    background-color: #000 !important;
+    width: 50vw !important;
+    height: 300px !important;
+    border-radius: 25px !important;
+    padding: 20px !important;
+    opacity: 0.9 !important;
+}
+
+    .square h1 {
+        color: #fff !important;
+    }

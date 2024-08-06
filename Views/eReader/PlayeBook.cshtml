@@ -1,0 +1,80 @@
+﻿@model BookStore.Models.eBook
+@{
+    ViewBag.Title = "Play eBook";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+
+}
+<link href="~/Styles/StyleSheet6.css" rel="stylesheet" />
+<style>
+    body {
+        background-color: #000000;
+    }
+</style>
+<body>
+
+    <div align="center">
+        <h1 style="color: #d0a772">Media PLayer</h1>
+    </div>
+    <hr />
+
+    <div align="center">
+        @{
+            if (Model.BookImageContent != null)
+            {
+                var base64 = Convert.ToBase64String(Model.BookImageContent);
+                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                <img src="@imgSrc" width="600" height="400" />
+            }
+        }
+    </div>
+
+
+    <br />
+
+
+    <div align="center" class="glowing">
+        <span> <audio id="audioPlayer" controls src="@Url.Action("ReadText", new { id = Model.Id, lastRead = false })" /> </span>
+    </div>
+    <br />
+    <br />
+    <br />
+
+    <div style="color: #d0a772; font-size: 20px" align="center">
+        @Html.DisplayFor(model => model.BookName)
+    </div>
+
+    <br />
+
+
+    <div style="color: #d0a772; font-size: 20px" align="center">
+        @Html.DisplayFor(model => model.BookDescription)
+    </div>
+
+    @*@Html.Partial("_ReaderAudio", new { @id = Model.Id, @lastRead = false })*@
+
+    <br />
+
+    <div>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn-sm btn-primary" })
+    </div>
+
+
+    <script>
+    //$(function () {
+    //    $('#audioPlayer').bind('canplay', function () {
+    //        $('#audioPlayer').currentTime = 10;
+    //    });
+    //});
+
+    @*var tt = '@Model.LastReadPosition';
+    var audio = document.getElementById('audioPlayer');
+    audio.onprogress = function () {
+        if (audio.currentTime == 0) {
+            audio.currentTime = 10;
+        }
+    }*@
+
+    //var currentPosition = parseInt(tt);
+    //element.currentTime = currentPosition;
+    </script>
+</body>

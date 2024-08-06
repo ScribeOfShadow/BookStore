@@ -1,0 +1,2 @@
+Run bookstore system script in sql managment studio on you db before running application
+

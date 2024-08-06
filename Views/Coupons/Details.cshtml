@@ -1,0 +1,51 @@
+﻿@model BookStore.Models.Coupon
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Coupon</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CouponCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponCounter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CouponCounter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponIsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CouponIsActive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CodeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,258 @@
+﻿@model IEnumerable<BookStore.Models.Evaluation>
+@using BookStore.Helpers;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    var CountList = Model;
+
+}
+
+<h2>Evaluations of Return and Refunds</h2>
+
+<style>
+    td {
+        border: 1px solid black;
+        word-wrap: break-word;
+    }
+    /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: dodgerblue; /* Red */
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+
+
+    .collapsible {
+        background-color: #d0a772;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        /*  .active, .collapsible:hover {
+            background-color: #555;
+        }*/
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+    }
+</style>
+<br />
+@if (ViewBag.message != null && ViewBag.message != "")
+{
+    <div class="alert">
+        <span class="closebtn">&times;</span>
+        @ViewBag.message
+    </div>
+}
+
+
+<br />
+<div class="form-group">
+    <div>
+        @Html.ActionLink("Show Pending Evaluation Case", "Index", "Evaluations", new { CasesToshow = "none" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Show Completed Evaluation Case", "Index", "Evaluations", new { CasesToshow = "eval" }, new { @class = "btn btn-primary" })
+    </div>
+    <br />
+
+
+
+    @if (Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <button type="button" class="collapsible">@item.ReferenceNumber</button>
+            <div class="content form-group">
+                <p>
+                    <table id="tblEvalut" class="table table-striped table-bordered dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Eval Reference Number
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.returnAndRefund.ReferenceNumber)
+                                </th>
+                                <th>
+                                    Action on Case
+                                </th>
+
+
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Comments)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CustomerName)
+                                </th>
+                                <th>
+                                    Return and refund Ref No
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IsCompleted)
+                                </th>
+                                <th>
+                                    Image of product
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @item.ReferenceNumber
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.returnAndRefund.ReferenceNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.rNRData.Name)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Comments)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CustomerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.returnAndRefund.ReferenceNumber)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsCompleted)
+                                </td>
+                                <td>
+                                    @try
+                                    {
+                                        @*<div class="card1-img .center">*@
+                                        <img src="data:image;base64,@System.Convert.ToBase64String(ImageHelper.GetImage(item.Id).ProductImage)"
+                                             style="width:300px; height:300px; margin:0px; padding:10px" alt="no photo" class="adsm-image; center-url" />
+                                        @*</div>*@
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        // throw;
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (item.IsCompleted != true && item.DeliveryPickUpForReturn != false && item.DeliveryPickUpForReturn != null)
+                                    {
+                                        @Html.ActionLink("Details", "Edit", new { id = item.Id })
+                                    }
+
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+                </p>
+            </div>
+        }
+    }
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="@Url.Content( "~/scripts/Datatables/jquery.dataTables.min.js" )"></script>
+<script src="@Url.Content( "~/scripts/Datatables/dataTables.bootstrap.js" )"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#tblEvalut").DataTable();
+
+
+        //$("#DistributionHistory").DataTable();
+        //$("#EmailHistoryTbl").DataTable();
+        //$("#SmsHistoryTbl").DataTable();
+        //$("#PetDetss").DataTable();
+        //$("#DeptResp").DataTable();
+        //$("#WardsTbl").DataTable();
+        //$("#StartObj").DataTable();
+        //$("#DocsTbl").DataTable();
+
+
+        /*    $("#ClosureTab").hide();*/
+    });
+
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+</script>

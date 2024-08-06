@@ -1,0 +1,51 @@
+﻿@model BookStore.Models.BorrowedBooks
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BorrowedBooks</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Library.LibraryProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Library.LibraryProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateBorrowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateBorrowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateReturned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateReturned)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

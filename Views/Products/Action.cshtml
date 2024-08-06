@@ -1,0 +1,226 @@
+﻿@model PagedList.IPagedList<BookStore.Models.Products>
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Styles/StyleSheet2.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+
+@{
+    ViewBag.Title = "Action";
+}
+<h2 class="text-center text-info" style="color:azure">Action</h2>
+
+<div class="bs-docs-section container">
+    <div class="row d-flex justify-content-center">
+        @using (Html.BeginForm("Action", "Products", FormMethod.Get))
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="searchdiv">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Enter a product name here.", @class = "search-input" })
+                        <input type="submit" class="dropbtn" value="Search" style="border-radius:4px;cursor:pointer" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+<li class="navbar1" style="padding:1px">
+    <ul class="navbar b">
+        <li class="nav-link1">@Html.ActionLink("Home", "OurProducts", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Action", "Action", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Comedy", "Comedy", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Cooking", "Cooking", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Drama", "Drama", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Education", "Education", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Fantasy", "Fantasy", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("History", "History", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Religion", "Religion", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Romance", "Romance", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+        <li class="nav-link1">@Html.ActionLink("Sci_fi", "Sci_fi", "Products", null, htmlAttributes: new { @class = "nav-item nav-link", style = "color: #F77D0A !important; font-size: 25px !important" })</li>
+    </ul>
+</li>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".AddLink").click(function () {
+            // Get the id from the link
+            var recordToAdd = $(this).attr("data-id");
+            if (recordToAdd != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/AddToCart", { "id": recordToAdd },
+                    function (data) {
+                        $('#cart-status').text(data.CartCount);
+                    });
+            }
+        });
+    });</script>
+
+
+
+<!-- Button trigger modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div aria-hidden="true" class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>An item was added to your cart.</strong> To check out now simply <a href="#" class="alert-link">click here</a>.
+    </div>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                @*<h4 class="modal-title">Confirm check out.</h4>*@
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to checkout?</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Keep Shopping</button>
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "ShoppingCart")'">Check Out</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body>
+    <div id="SubmitModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title dropbtn" id="modalTitleText">Description</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container col-md-12">
+                        <div id="appendDes" class="col-md-12">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="dropbtn" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    @foreach (var item in Model)
+    {
+        if (item.ProductCatergoryId == 5)
+        {
+            <div class="card1-columns px-3">
+
+
+                <div class="column1 d-flex justify-content-center p-3">
+                    <div class="grid1-container px-4" style="box-shadow: 0 4px 3px black; background:rgb(245, 245, 245);border-radius:4px">
+                        <div class="grid1-item">
+
+                            <div class="card1 .center">
+                                <div class="card1-img .center">
+                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.ProductImage)"
+                                         style="width:300px; height:300px; margin:0px; padding:10px" alt="no photo" class="adsm-image; center-url" />
+                                </div>
+
+                                <div class="card1-body">
+                                    <h4 class="card1-title">Name: <span class="card-value">@item.ProductName</span> </h4>
+                                </div>
+
+                                <div class="card1-body">
+                                    <h4 class="card1-title">Price: <span class="card-value">R @item.ProductPrice</span></h4>
+                                </div>
+                                <div class="card1-body d-flex justify-content-center">
+                                    <div class="d-flex p-0 pb-1">
+                                        @* <span class="m-0 p-0" style="cursor: pointer" id="IncrsQty" onclick="IncrsQty()">
+                                                <i class="fa fa-plus"></i>
+                                            </span>*@
+                                        <h4 class="m-0 p-0 mx-3" id="quantity">Available Currently<span class="card-value"> @item.ProductStock </span></h4>
+                                        @*<span class="m-0 p-0" id="DecrsQty" onclick="DecrsQty()">
+                                                <i class="fa fa-minus" style="cursor: pointer"></i>
+                                            </span>*@
+                                    </div>
+                                </div>
+
+                                <div class="card1-footer">
+                                    <div class="dropdown">
+
+                                        <input type="button" id="btnShowMore" class="dropbtn" onclick="showDesFunction('@item.ProductDescription')" value="Show More">
+                                        <div id="Textbox" class="dropdown-content">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="d-flex justify-content-center pt-2">
+                                    <a style="text-align:center; align-content:center; position:center" href="#" class="AddLink AddLinkTab" data-id="@item.ProductId" data-toggle="modal" data-target="#myModal"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</a>
+                                    <!--@Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductId, }, new { htmlAttributes = new { @data_toggle = "modal", @data_target = "#myModal" } })-->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div style="height:400px">
+
+    </div>
+</body>
+
+<style>
+    .card-value {
+        font-weight: bold;
+    }
+
+    .search-input {
+        width: 300px;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid black;
+        padding-left: 12px;
+    }
+
+        .search-input:focus {
+            border-color: rgb(181 112 112)
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vast-engineering/jquery-popup-overlay@2/jquery.popupoverlay.min.js"></script>
+
+<script>
+    function showDesFunction(description) {
+        const [desc, cat] = description.split('|');
+        var des = document.getElementById("appendDes");
+        des.style.color = "black";
+        des.innerHTML = desc;
+        $("#SubmitModal").modal("show");
+    };
+</script>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="px-5">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Action", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

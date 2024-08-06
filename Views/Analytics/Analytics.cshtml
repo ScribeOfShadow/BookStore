@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "Analytics";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style>
+    .center {
+        margin: auto;
+        width: 90%;
+        border: 1px solid #73AD21;
+        padding: 10px;
+    }
+</style>
+
+<div style="margin-left:10px;">
+    <h2>Analytics</h2>
+    <div class="center">
+        <div class="col-lg-10">
+            <div class="col-lg-9">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                        </div>
+                        <h4 style="text-decoration: underline;">Ratings</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="RatingsGraphDiv">
+                            <div class="loader loader-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <div class="center">
+        <div class="col-lg-10">
+            <div class="col-lg-9">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                        </div>
+                        <h4 style="text-decoration: underline;">Most Sold</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="MostSoldGraphDiv">
+                            <div class="loader loader-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="center">
+        <div class="col-lg-10">
+            <div class="col-lg-9">
+                <div class="hpanel">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                        </div>
+                        <h4 style="text-decoration: underline;">Most Comments</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="MostCommentsGraphDiv">
+                            <div class="loader loader-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script>
+    var dynamicColors = function () {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+
+    initWorkFlows = function (data, canvasId) {
+        var labels = data.map(item => item.Name);
+        var FiveStars = data.map(item => item.FiveStars);
+        var FourStars = data.map(item => item.FourStars);
+        var ThreeStar = data.map(item => item.ThreeStar);
+        var TwoStars = data.map(item => item.TwoStars);
+        var OneStars = data.map(item => item.OneStars);
+
+        var lineData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Five Stars",
+                    backgroundColor: 'rgba(245, 215, 66,0.5)',
+                    borderColor: "rgba(245, 215, 66 ,0.7)",
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(245, 215, 66,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#f5d742',
+                    borderWidth: 1,
+                    data: FiveStars
+                },
+                {
+                    label: "Four Stars",
+                    backgroundColor: 'rgba(98,203,49, 0.5)',
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(98,203,49,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#ffffff',
+                    borderWidth: 1,
+                    data: FourStars
+                },
+                {
+                    label: "Three Star",
+                    backgroundColor: 'rgba(245, 66, 77,0.5)',
+                    borderColor: "rgba(245, 66, 77,0.7)",
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(220,220,220,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#f54242',
+                    borderWidth: 1,
+                    data: ThreeStar
+                },
+                {
+                    label: "Two Star",
+                    backgroundColor: 'rgba(245, 66, 33,0.5)',
+                    borderColor: "rgba(245, 66, 33,0.7)",
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(220,220,220,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#f54242',
+                    borderWidth: 1,
+                    data: TwoStars
+                },
+                {
+                    label: "One Star",
+                    backgroundColor: 'rgba(245, 66, 90,0.5)',
+                    borderColor: "rgba(245, 66, 90,0.7)",
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(220,220,220,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#f54242',
+                    borderWidth: 1,
+                    data: OneStars
+                }
+            ]
+        };
+
+        var lineOptions = {
+            responsive: true,
+        };
+
+        var ctx = document.getElementById(canvasId).getContext("2d");
+        new Chart(ctx, {
+            type: 'bar', data: lineData,
+            options: {
+                title: {
+                    display: true,
+                    text: "Book Ratings"
+                },
+                lineOptions
+            } });
+    };
+
+    initWorkFlowsMostSold = function (data, canvasId) {
+        //var labels = data.map(item => item.Key.BookName);
+        //var MostSold = data.map(item => item.count);
+        //var LeastSold = data.map(item => item.count);
+        var coloR = [];
+
+        for (var i in data) {
+            coloR.push(dynamicColors());
+        }
+
+        var xValues = data.map(item => item.Key.BookName);
+        var yValues = data.map(item => item.count);
+
+        var barColors = coloR;
+        var ctx = document.getElementById(canvasId).getContext("2d");
+        var lineOptions = {
+            responsive: true
+        };
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Most Sold Books"
+                },
+                lineOptions
+            }
+        });
+
+
+
+        //var ctx = document.getElementById(canvasId).getContext("2d");
+        //new Chart(ctx, { type: 'bar', data: lineData, options: lineOptions });
+    };
+    initWorkFlowsMostComments = function (data, canvasId) {
+        var labels = data.map(item => item.Key.BookName);
+        var MostSold = data.map(item => item.count);
+        var LeastSold = data.map(item => item.count);
+
+        var lineData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Most Commented",
+                    backgroundColor: 'rgba(245, 215, 66,0.5)',
+                    borderColor: "rgba(245, 215, 66 ,0.7)",
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(245, 215, 66,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#f5d742',
+                    borderWidth: 1,
+                    data: MostSold,
+                    fill: false,
+                },
+                {
+                    label: "Least Commented",
+                    backgroundColor: 'rgba(98,203,49, 0.5)',
+                    pointBorderWidth: 1,
+                    pointBackgroundColor: "rgba(98,203,49,1)",
+                    pointRadius: 3,
+                    pointBorderColor: '#ffffff',
+                    borderWidth: 1,
+                    data: LeastSold,
+                    fill: false,
+                }
+            ]
+        };
+
+        var lineOptions = {
+            responsive: true
+        };
+
+        var ctx = document.getElementById(canvasId).getContext("2d");
+        new Chart(ctx, { type: 'line', data: lineData, options: lineOptions });
+    };
+
+    $(document).ready(function () {
+        initWorkFlowGraphFor('contract', 'RatingsGraph');
+        initWorkFlowGraphForMostSold('contract', 'MostSoldGraph');
+        initWorkFlowGraphForMostComments('contract', 'MostCommentsGraph');
+
+    });
+
+    var initWorkFlowGraphFor = function (transactionType, canvasId) {
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: '@Url.Action("WorkFlowGraphData", "Analytics")',
+            success: function (data) {
+                console.log('Graph Data', data);
+                $('#' + canvasId + 'Div').html('<canvas id="' + canvasId + '" height="200"></canvas>');
+                initWorkFlows(data, canvasId);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    var initWorkFlowGraphForMostSold = function (transactionType, canvasId) {
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: '@Url.Action("WorkFlowGraphDataMostSold", "Analytics")',
+            success: function (data) {
+                console.log('Graph Data', data);
+                $('#' + canvasId + 'Div').html('<canvas id="' + canvasId + '" height="200"></canvas>');
+                initWorkFlowsMostSold(data, canvasId);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+    var initWorkFlowGraphForMostComments = function (transactionType, canvasId) {
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: '@Url.Action("WorkFlowGraphDataMostCommented", "Analytics")',
+            success: function (data) {
+                console.log('Graph Data', data);
+                $('#' + canvasId + 'Div').html('<canvas id="' + canvasId + '" height="200"></canvas>');
+                initWorkFlowsMostComments(data, canvasId);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+
+
+</script>
+

@@ -1,0 +1,53 @@
+﻿@model BookStore.Models.ChatBox
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href="~/Styles/StyleSheet3.css" rel="stylesheet" />
+
+
+<h2 class="AddLinkTab" style="margin-top:80px; " >Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ChatBox</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChatPost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChatPost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Posted_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Posted_Date)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

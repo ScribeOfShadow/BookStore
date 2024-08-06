@@ -1,0 +1,59 @@
+﻿@model BookStore.Models.BookQrCodes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BookQrCodes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Library.LibraryProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Library.LibraryProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlainText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlainText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RenderedImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RenderedImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RenderedBytes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RenderedBytes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScannedCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScannedCount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

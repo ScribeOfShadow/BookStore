@@ -1,0 +1,35 @@
+﻿@model BookStore.Models.WishLists
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WishLists</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ListId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

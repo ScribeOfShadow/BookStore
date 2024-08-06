@@ -1,0 +1,87 @@
+﻿@model IEnumerable<BookStore.Models.ReturnAndRefund>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Refund and Returns </h2>
+<br />
+<table id="table" class="table table-striped table-bordered dt-responsive nowrap">
+    <thead>
+
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferenceNumber)
+            </th>
+            <th>
+                Reason For Return
+            </th>
+            <th>
+                Refund Action
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sale.SaleDate)
+            </th>
+            <th>
+                Reason For Return
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReferenceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReasonDrop.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RNRData.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sale.SaleDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdditionalComments)
+                </td>
+                <td>
+                    @Html.ActionLink("Admin Decision", "Edit", new { id = item.Id }) |
+                   
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="@Url.Content( "~/scripts/Datatables/jquery.dataTables.min.js" )"></script>
+<script src="@Url.Content( "~/scripts/Datatables/dataTables.bootstrap.js" )"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#table").DataTable();
+
+
+        //$("#DistributionHistory").DataTable();
+        //$("#EmailHistoryTbl").DataTable();
+        //$("#SmsHistoryTbl").DataTable();
+        //$("#PetDetss").DataTable();
+        //$("#DeptResp").DataTable();
+        //$("#WardsTbl").DataTable();
+        //$("#StartObj").DataTable();
+        //$("#DocsTbl").DataTable();
+
+
+        /*    $("#ClosureTab").hide();*/
+    });
+
+</script>

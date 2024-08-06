@@ -1,0 +1,12 @@
+﻿@model IEnumerable<BookStore.Models.BookQrCodes>
+
+@foreach (var item in Model)
+{
+    @{if (item.RenderedBytes != null)
+        {
+            var base64 = Convert.ToBase64String(item.RenderedBytes);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <img src="@imgSrc" width="100" height="100" />
+        }
+    }
+}

@@ -1,0 +1,83 @@
+﻿@model BookStore.Models.ReturnAndRefund
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReturnAndRefund</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReasonDrop.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReasonDrop.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RNRData.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RNRData.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale.SaleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sale.SaleDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionalComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionalComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminComments)
+        </dd>
+
+
+          <dt>
+            @Html.DisplayNameFor(model => model.ReferenceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReferenceNumber)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

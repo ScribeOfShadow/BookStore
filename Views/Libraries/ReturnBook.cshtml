@@ -1,0 +1,22 @@
+﻿@model Boolean
+@{
+    ViewBag.Title = "ReturnBook";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Return Was Succedful Book</h2>
+<br />
+<br />
+
+@if (Model == true)
+{
+    <span class="alert alert-success">
+        Book Returned Successfully
+    </span>
+}
+else
+{
+    <span class="alert alert-danger">
+        Book could not be returned
+    </span>
+}

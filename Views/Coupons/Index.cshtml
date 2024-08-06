@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BookStore.Models.Coupon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<Style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</Style>
+<h1 style="font-size: 30px" class="text-center text-info">Coupon</h1>
+
+<div>@ViewBag.UserData</div>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CouponCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            Coupon Status
+        </th>
+        <th>Send To All Users</th>
+        <th></th>
+        <th>
+         Active Emails            
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CouponCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @if (item.CouponIsActive == true)
+                {
+                    <span style="font-weight:800">Currently Active</span>
+                }
+                @if (item.CouponIsActive == false)
+                {
+                    <span style="font-weight:800">Currently Deactived</span>
+                }
+            </td>
+            <td>
+                <button type="button" class="AddLinkTab" onclick="location.href='@Url.Action("SendCouponButton", "Coupons",new { couponId = item.CodeId } )'"><span>Send Out</span></button>
+            </td>
+            <td style="font-weight:800">
+                @Html.ActionLink("Delete", "Delete", new { id = item.CodeId })
+            </td>
+            
+            <td>
+                @ViewBag.ActiveUsers
+            </td>
+        </tr>
+    }
+
+</table>

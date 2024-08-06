@@ -1,0 +1,153 @@
+﻿
+.invoice-box {
+    max-width: 1000px;
+    margin: auto;
+    padding: 10px;
+    padding-top: 0px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+    font-size: 10px;
+    line-height: 24px;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    color: #555;
+}
+
+.invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+}
+
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+
+    .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+    }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 20px;
+            line-height: 45px;
+            color: #333;
+        }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 0px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td {
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+@media only screen and (max-width: 600px) {
+    .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+}
+
+/** RTL **/
+.rtl {
+    direction: rtl;
+    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+}
+
+    .rtl table {
+        text-align: right;
+    }
+
+.invoice-box table tr td:nth-child(2) {
+    text-align: left;
+}
+
+.ginformation {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+    .ginformation td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 1px;
+        font-size: 12px;
+    }
+
+    .ginformation tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding: 10px;
+    height: 150px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+    width: 50%;
+}
+
+.right {
+    width: 20%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 1.6cm;
+    }
+
+    .footerMsg{
+        font-size:14px;
+    }
+    .useragreement {
+        font-size: 14px;
+    }
+}

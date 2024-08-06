@@ -1,0 +1,49 @@
+﻿@model BookStore.Models.RequestBook
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<link href="~/Styles/StyleSheet3.css" rel="stylesheet" />
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal square">
+    <h4 style="color:azure">RequestBook</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Book_RequestId)
+    @Html.HiddenFor(model => model.Book_Request)
+    @Html.HiddenFor(model => model.Date_Requested)
+
+
+    <div class="form-group" style="color:azure">
+        @Html.LabelFor(model => model.Admindecision, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox" style="margin-left: 80px">
+                @Html.EditorFor(model => model.Admindecision)
+                @Html.ValidationMessageFor(model => model.Admindecision, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

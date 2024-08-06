@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BookStore.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Manage User Roles";
+}
+
+
+<h2 class="AddLinkTab" style="margin-top:70px">Manage User Roles</h2>
+<hr />
+<h3 class="AddLinkTab">Assign A Driver Or Admin Here</h3>
+<hr />
+
+
+<div class="square">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Account Name")
+            </th>
+            <th>
+                @Html.DisplayName("Role")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Where(x => x.UserName != "admin@appdev.com"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Assign Role", "Edit", new { id = item.Id })
+                </td>
+            </tr>
+         }
+</div>

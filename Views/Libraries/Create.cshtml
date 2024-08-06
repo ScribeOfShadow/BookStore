@@ -1,0 +1,85 @@
+﻿@model BookStore.Models.Library
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<link href="~/Styles/StyleSheet3.css" rel="stylesheet" type="text/css" />
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="panel panel-info" style="color:black">
+    <div class="form-horizontal">
+        <h4 style="color:black">Library</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+
+            <div class="col-md-10" style="color:black">
+                @Html.LabelFor(model => model.LibraryCatergoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownListFor(model => model.LibraryCatergoryId, (SelectList)ViewBag.LibraryCatergories, "--Select--", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LibraryCatergoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="color:black">
+            @Html.LabelFor(model => model.LibraryProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LibraryProductName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LibraryProductName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="color:black">
+            @Html.LabelFor(model => model.LibraryAuthor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LibraryAuthor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LibraryAuthor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="color:black">
+            @Html.LabelFor(model => model.LibraryDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LibraryDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LibraryDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="color:black">
+            @Html.LabelFor(model => model.LibraryURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LibraryURL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LibraryURL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group" style="color:black" >
+            @Html.LabelFor(model => model.TotalStock, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TotalStock, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalStock, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

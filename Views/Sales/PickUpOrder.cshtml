@@ -1,0 +1,137 @@
+﻿@model IEnumerable<BookStore.Models.Delivery>
+
+@{
+    ViewBag.Title = "PickUpOrder";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Pick Up Orders</h2>
+
+<style>
+    /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: dodgerblue; /* Red */
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+</style>
+<br />
+@if (ViewBag.message != null && ViewBag.message != "")
+{
+    <div class="alert">
+        <span class="closebtn">&times;</span>
+        @ViewBag.message
+    </div>
+}
+
+
+<br />
+
+
+<table id="tblDeliveries" class="table table-striped table-bordered dt-responsive nowrap">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.sale.SaleDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isDelivered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPickedUpForReturn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsForReturn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sale.SaleDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryFee)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isDelivered)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsPickedUpForReturn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsForReturn)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.SaleId })
+                    @if (item.IsPickedUpForReturn == false)
+                    {
+                        @Html.ActionLink("Picked Up Completed", "PickUpCom", new { id = item.DeliveryId })
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+<script src="@Url.Content( "~/scripts/Datatables/jquery.dataTables.min.js" )"></script>
+<script src="@Url.Content( "~/scripts/Datatables/dataTables.bootstrap.js" )"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#tblDeliveries").DataTable();
+
+
+        //$("#DistributionHistory").DataTable();
+        //$("#EmailHistoryTbl").DataTable();
+        //$("#SmsHistoryTbl").DataTable();
+        //$("#PetDetss").DataTable();
+        //$("#DeptResp").DataTable();
+        //$("#WardsTbl").DataTable();
+        //$("#StartObj").DataTable();
+        //$("#DocsTbl").DataTable();
+
+
+        /*    $("#ClosureTab").hide();*/
+    });
+
+</script>

@@ -1,0 +1,43 @@
+﻿@model BookStore.Models.RequestBook
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RequestBook</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Book_Request)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Book_Request)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Requested)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Requested)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admindecision)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admindecision)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Book_RequestId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

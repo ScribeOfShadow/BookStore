@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BookStore.Models.ProductCatergory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    <p style="color:azure">
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CatergoryName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatergoryName)
+            </td>
+            <td>
+                <a2>@Html.ActionLink("Edit", "Edit", new { id = item.ProductCatergoryId }) </a2>
+                <a2>@Html.ActionLink("Details", "Details", new { id = item.ProductCatergoryId }) </a2>
+                <a2>@Html.ActionLink("Delete", "Delete", new { id = item.ProductCatergoryId })</a2>
+            </td>
+        </tr>
+    }
+
+</table>

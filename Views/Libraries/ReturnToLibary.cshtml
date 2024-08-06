@@ -1,0 +1,45 @@
+﻿@model byte[]
+@{
+    ViewBag.Title = "ReturnToLibary";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<div class="form-horizontal" style="text-align:center; ">
+    <h1 style="color:#000000">Present At the Desk</h1>
+    <div style="position:center;">
+        <h2 style="color:#000000; text-align:center">To Collect Your Book</h2>
+        @*<div>
+                <a href="https://www.google.com/search?q=verulam+high+school&oq=&aqs=chrome.0.69i59i450l8.93032704j0j15&sourceid=chrome&ie=UTF-8#">
+                    <img src="~/Images/Logo.jpg" alt="No image" style="align-content:center; width:190px; height:250px; margin:10px">
+                </a>
+            </div>*@
+        <div style="text-align:center">
+            <div class="form-group" style="text-align:center">
+
+
+                <div class="col-md-10" style="max-width:inherit">
+                    @{if (Model != null)
+                        {
+                            var base64 = Convert.ToBase64String(Model);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <img src="@imgSrc" width="300" height="300" />
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-right: 20px; padding-left: 30px; margin-left:40px">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="https://verulamhighlibraryandbookstore.azurewebsites.net">
+                    <input type="submit" value="Borrow" class="btn btn-default" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

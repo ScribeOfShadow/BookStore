@@ -1,0 +1,83 @@
+﻿@model BookStore.Models.Library
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Library</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LibraryProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LibraryProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LibraryDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LibraryDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LibraryURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LibraryURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAssigned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAssigned)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Borrowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Borrowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpectedReturn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpectedReturn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReturnedDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LibraryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
